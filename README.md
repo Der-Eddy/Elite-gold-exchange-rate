@@ -27,10 +27,24 @@ The second core part of this project is the treasure scraper, run `treasure.py` 
 
 Database Dump
 -------------
-Soon I will release database dumps of all treasures I scraped so far.
+I will sporadically upload database dumps into this MEGA.nz folder: [https://mega.nz/#F!hUpxAI5Y!XM_Q7ogCaIIM3inWZ8kV3A](https://mega.nz/#F!hUpxAI5Y!XM_Q7ogCaIIM3inWZ8kV3A)
 
 Requirements
 -------------
+A PostgreSQL Database is required to store the treasure data, create a new user (i.e. `python` like in the example) and create a new table named `treasures` with this query:
+
+    CREATE TABLE public.treasures (
+        id bigint NOT NULL,
+        sellerid bigint,
+        seller bytea,
+        cost bigint,
+        "timestamp" timestamp without time zone,
+        title bytea,
+        last_updated timestamp without time zone NOT NULL,
+        buyer bytea,
+        buyerid bigint
+    );
+
 On top of Python 3.6, these PyPi packages are needed:
 
     requests
