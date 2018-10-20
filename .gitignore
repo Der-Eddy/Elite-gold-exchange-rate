@@ -93,3 +93,4 @@ config.py
 temp*
 tmp*
 debug.py
+*.json
