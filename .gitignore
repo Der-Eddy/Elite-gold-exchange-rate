@@ -90,7 +90,5 @@ ENV/
 *.log
 *.log.*
 config.py
-temp*
-tmp*
 debug.py
 *.json
