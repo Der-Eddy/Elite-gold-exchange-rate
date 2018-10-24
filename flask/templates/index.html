@@ -82,7 +82,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for treasure in data.treasureList %}
+                        {% for treasure in data.treasureList|reverse %}
                           <tr>
                             <td><a href="https://www.elitepvpers.com/theblackmarket/treasure/{{ treasure.id }}">#{{ treasure.id }}</a></td>
                             <td>{{ treasure.title|e }}</td>
