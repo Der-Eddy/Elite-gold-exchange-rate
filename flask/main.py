@@ -16,6 +16,14 @@ def index():
     sha = repo.head.object.hexsha[1:7]
     return render_template('index.html', data=jsonData, gitHash=sha)
 
+@app.route('/updates')
+def updates():
+    jsonFile = os.path.join(app.root_path, 'api.json')
+    jsonData = json.load(open(jsonFile))
+    repo = git.Repo(search_parent_directories=True)
+    sha = repo.head.object.hexsha[1:7]
+    return render_template('updates.html', data=jsonData, gitHash=sha)
+
 @app.route('/api/v1/')
 def api():
     jsonFile = os.path.join(app.root_path, 'api.json')

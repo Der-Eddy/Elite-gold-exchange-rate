@@ -8,69 +8,119 @@
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        {% if title == index %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+        {% if self.title() == 'Index' %}
             <title>Elite*gold Exchange Price</title>
         {% else %}
             <title>{% block title %}{% endblock %} - Elite*gold Exchange Price</title>
         {% endif %}
+        <script>
+        $(document)
+            .ready(function() {
+            // fix menu when passed
+            $('.masthead')
+                .visibility({
+                once: false,
+                onBottomPassed: function() {
+                    $('.fixed.menu').transition('fade in');
+                },
+                onBottomPassedReverse: function() {
+                    $('.fixed.menu').transition('fade out');
+                }
+                })
+            ;
+
+        </script>
     </head>
     <body>
-        <h1 class="ui center aligned header"><a href="https://www.elitepvpers.com/forum/" target="_blank">Elite*gold</a> Exchange Price</h2>
-
-        {% block content %}{% endblock %}
-
-        <div class="ui inverted vertical footer segment" id="footer">
-          <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-              <div class="three wide column">
-                <h4 class="ui inverted header">About</h4>
-                <div class="ui inverted link list">
-                  <a href="https://www.elitepvpers.com/forum/members/984054-der-eddy.html" class="item"><i class="user secret icon"></i>Der-Eddy</a>
-                  <a href="https://discord.gg/jPt7mPZ" class="item"><i class="discord icon"></i> Der-Eddy#6508</a>
-                  <a href="https://github.com/Der-Eddy" class="item"><i class="github icon"></i> Der-Eddy</a>
-                  <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate" class="item"><i class="github square icon"></i> GitHub Repository</a>
-                  <a href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html" class="item"><i class="newspaper icon"></i> EPvP Thread</a>
-                  <a href="https://blog.eddy-dev.net/about/" class="item"><i class="info icon"></i> About</a>
-                </div>
-              </div>
-              <div class="three wide column">
-                <h4 class="ui inverted header">Made with</h4>
-                <div class="ui inverted link list">
-                  <a href="http://semantic-ui.com/" class="item"><i class="css3 icon"></i> Semantic-UI</a>
-                  <a href="https://www.python.org/" class="item"><i class="python icon"></i> Python</a>
-                  <a href="http://flask.pocoo.org/" class="item"><i class="flask icon"></i> Flask</a>
-                  <a href="http://jquery.com/" class="item"><i class="js square icon"></i> jQuery</a>
-                  <a href="https://www.nginx.com/" class="item"><i class="github icon"></i> Nginx</a>
-                  <a href="https://www.netcup.de/" class="item"><i class="linux icon"></i> Netcup</a>
-                </div>
-              </div>
-              <div class="five wide column">
-                <h4 class="ui inverted header">Other cool informations</h4>
-                <p>For more treasures check <a href="https://epvptrades.de/">epvptrades.de</a></p>
-                <br><p>This project is <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Open-Source</a> with the <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate/blob/master/LICENSE">GPLv3 License</a></p>
-                <p>Version: {{ gitHash }}</p>
-              </div>
-              <div class="four wide column">
-                <h4 class="ui inverted header">Other statistics</h4>
-                <div class="ui tiny inverted statistic">
-                  <div class="value">
-                    {{ data.treasureCount }}
-                  </div>
-                  <div class="label">
-                    Paysafecard related Treasures (14 days)
-                  </div>
-                </div>
-                <div class="ui tiny inverted statistic">
-                  <div class="value">
-                    {{ data.rows }}
-                  </div>
-                  <div class="label">
-                    All Treasures
-                  </div>
-                </div>
-              </div>
+        <!-- Following Menu -->
+        <div class="ui large top fixed hidden menu">
+            <div class="ui container">
+                <a class="link {% if self.title() == 'Index' %}active {% endif %}item" href="/"><i class="home icon"></i> Home</a>
+                <a class="link item" href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html"><i class="newspaper icon"></i> Epvp Thread</a>
+                <a class="link item" href="/api/v1"><i class="key icon"></i> API</a>
             </div>
-          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="ui vertical inverted sidebar menu">
+            <a class="link {% if self.title() == 'Index' %}active {% endif %}item" href="/"><i class="home icon"></i> Home</a>
+            <a class="link item" href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html"><i class="newspaper icon"></i> Epvp Thread</a>
+            <a class="link item" href="/api/v1"><i class="key icon"></i> API</a>
+        </div>
+
+        <!-- Page Contents -->
+        <div class="pusher">
+            <div class="ui vertical masthead center aligned segment">
+                <div class="ui container">
+                    <div class="ui large secondary inverted pointing menu">
+                        <a class="toc item">
+                        <i class="sidebar icon"></i>
+                        </a>
+                        <a class="link {% if self.title() == 'Index' %}active {% endif %}item" href="/"><i class="home icon"></i> Home</a>
+                        <a class="link item" href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html"><i class="newspaper icon"></i> Epvp Thread</a>
+                        <a class="link item" href="/api/v1"><i class="key icon"></i> API</a>
+                    </div>
+                </div>
+                <h1 class="ui center aligned header"><a href="https://www.elitepvpers.com/forum/" target="_blank">Elite*gold</a> Exchange Price</h2>
+            </div>
+
+
+            {% block content %}{% endblock %}
+
+            <div class="ui inverted vertical footer segment" id="footer">
+            <div class="ui container">
+                <div class="ui stackable inverted divided equal height stackable grid">
+                <div class="three wide column">
+                    <h4 class="ui inverted header">About</h4>
+                    <div class="ui inverted link list">
+                    <a href="https://www.elitepvpers.com/forum/members/984054-der-eddy.html" class="item"><i class="user secret icon"></i>Der-Eddy</a>
+                    <a href="https://discord.gg/jPt7mPZ" class="item"><i class="discord icon"></i> Der-Eddy#6508</a>
+                    <a href="https://github.com/Der-Eddy" class="item"><i class="github icon"></i> Der-Eddy</a>
+                    <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate" class="item"><i class="github square icon"></i> GitHub Repository</a>
+                    <a href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html" class="item"><i class="newspaper icon"></i> EPvP Thread</a>
+                    <a href="https://blog.eddy-dev.net/about/" class="item"><i class="info icon"></i> About</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">Made with</h4>
+                    <div class="ui inverted link list">
+                    <a href="http://semantic-ui.com/" class="item"><i class="css3 icon"></i> Semantic-UI</a>
+                    <a href="https://www.python.org/" class="item"><i class="python icon"></i> Python</a>
+                    <a href="http://flask.pocoo.org/" class="item"><i class="flask icon"></i> Flask</a>
+                    <a href="http://jquery.com/" class="item"><i class="js square icon"></i> jQuery</a>
+                    <a href="https://www.nginx.com/" class="item"><i class="github icon"></i> Nginx</a>
+                    <a href="https://www.netcup.de/" class="item"><i class="linux icon"></i> Netcup</a>
+                    </div>
+                </div>
+                <div class="five wide column">
+                    <h4 class="ui inverted header">Other cool informations</h4>
+                    <p>For more treasures check <a href="https://epvptrades.de/">epvptrades.de</a></p>
+                    <br><p>This project is <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Open-Source</a> with the <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate/blob/master/LICENSE">GPLv3 License</a></p>
+                    <p>Version: {{ gitHash }}</p>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header">Other statistics</h4>
+                    <div class="ui tiny inverted statistic">
+                    <div class="value">
+                        {{ data.treasureCount }}
+                    </div>
+                    <div class="label">
+                        Paysafecard related Treasures (14 days)
+                    </div>
+                    </div>
+                    <div class="ui tiny inverted statistic">
+                    <div class="value">
+                        {{ data.rows }}
+                    </div>
+                    <div class="label">
+                        All Treasures
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
     <script>
       $('#ex_rate').bind('input', function() {
