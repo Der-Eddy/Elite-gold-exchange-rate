@@ -1,178 +1,64 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
-        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <title>Elite*gold Exchange Price</title>
-    </head>
-    <body>
-        <h1 class="ui center aligned header"><a href="https://www.elitepvpers.com/forum/" target="_blank">Elite*gold</a> Exchange Price</h2>
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+  <div class="ui two column centered stackable grid" id="grid">
+      <div class="five column centered row">
+          <div class="ui horizontal inverted divider">
+            <p>Paysafecard <i class="exchange icon"></i> Elite*gold Exchange Median Price</p>
+          </div>
+          <div class="six wide computer only column">
+              <h1 class="ui center aligned">1 € <i class="exchange icon"></i> {{ data.median|int }} Elite*gold</h1>
+              <div class="ui center aligned">Based on created treasures in the last 14 days</div>
+          </div>
 
-        <div class="ui one column centered stackable grid container">
-            <div class="two column centered row">
-                <div class="column" id="left">
-                    <div class="ui large violet message">
-                      <div class="content">
-                        Last updated at <span style="color: violet;" id="last_updated">{{ data.lastUpdated|timestamp_to_time }}</span>
-                      </div>
-                    </div>
-                    <div class="ui icon blue message">
-                      <i class="thumbs info icon"></i>
-                      <div class="content">
-                        <div class="header">
-                          Experimental Site
-                        </div>
-                        This is a test site in order to automatically obtain the current Paysafecard to Elite*gold exchange price. Information provided without guarantee.
-                      </div>
-                    </div>
-                </div>
+          <div class="ui horizontal inverted divider">
+            <p><i class="exchange icon"></i>Elite*gold Converter</p>
+          </div>
+          <div class="column">
+            <h3>Exchange Rate</h3>
+            <div class="ui icon input"><input id="ex_euro" size="5" value="1" type="text"><i class="euro sign icon"></i></div> <i class="exchange icon"></i>
+            <div class="ui right labeled input"><input id="ex_rate" size="5" value="{{ data.median|int }}" type="text"><div class="ui label">Elite*gold</div></div>
+            <h3>Converter</h3>
+            <div class="ui icon input"><input id="euro" size="5" type="text"><i class="euro sign icon"></i></div> <i class="exchange icon"></i>
+            <div class="ui right labeled input"><input id="eg" size="5" type="text"><div class="ui label">Elite*gold</div></div>
+          </div>
 
-                <div class="mobile only column" id="left">
-                    <div class="ui icon info message">
-                      <i class="mobile icon"></i>
-                      <div class="content">
-                        You are visiting the mobile site.
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
-
-        <div class="ui two column centered stackable grid" id="grid">
-            <div class="five column centered row">
-                <div class="ui horizontal inverted divider">
-                  <p>Paysafecard <i class="exchange icon"></i> Elite*gold Exchange Median Price</p>
-                </div>
-                <div class="six wide computer only column">
-                    <h1 class="ui center aligned">1 € <i class="exchange icon"></i> {{ data.median|int }} Elite*gold</h1>
-                    <div class="ui center aligned">Based on created treasures in the last 14 days</div>
-                </div>
-
-                <div class="ui horizontal inverted divider">
-                  <p><i class="exchange icon"></i>Elite*gold Converter</p>
-                </div>
-                <div class="column">
-                  <h3>Exchange Rate</h3>
-                  <div class="ui icon input"><input id="ex_euro" size="5" value="1" type="text"><i class="euro sign icon"></i></div> <i class="exchange icon"></i>
-                  <div class="ui right labeled input"><input id="ex_rate" size="5" value="{{ data.median|int }}" type="text"><div class="ui label">Elite*gold</div></div>
-                  <h3>Converter</h3>
-                  <div class="ui icon input"><input id="euro" size="5" type="text"><i class="euro sign icon"></i></div> <i class="exchange icon"></i>
-                  <div class="ui right labeled input"><input id="eg" size="5" type="text"><div class="ui label">Elite*gold</div></div>
-                </div>
-
-                <div class="ui horizontal inverted divider">
-                  <p><i class="history icon"></i>Last Paysafecard Treasures (14 days)</p>
-                </div>
-                <div class="twelve wide column">
-                    <table class="ui celled inverted table">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th class="six wide">Title</th>
-                          <th>Cost</th>
-                          <th>Creation Date</th>
-                          <th>Seller</th>
-                          <th>Buyer</th>
-                          <th>Ratio</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for treasure in data.treasureList|reverse %}
-                          <tr>
-                            <td><a href="https://www.elitepvpers.com/theblackmarket/treasure/{{ treasure.id }}">#{{ treasure.id }}</a></td>
-                            <td>{{ treasure.title|e }}</td>
-                            <td>{{ treasure.cost }}</td>
-                            <td>{{ treasure.timestamp|timestamp_to_time }}</td>
-                            <td><a href="https://www.elitepvpers.com/forum/member.php?u={{ treasure.sellerid }}">{{ treasure.sellername }}</a></td>
-                            {% if treasure.buyerid %}
-                              <td><a href="https://www.elitepvpers.com/forum/member.php?u={{ treasure.buyerid }}">{{ treasure.buyername }}</a></td>
-                            {% else %}
-                              <td></td>
-                            {% endif %}
-                            <td>1 <i class="exchange icon"></i> {{ treasure.ratio|int }}</td>
-                          </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                </div>
-              </div>
+          <div class="ui horizontal inverted divider">
+            <p><i class="history icon"></i>Last Paysafecard Treasures (14 days)</p>
+          </div>
+          <div class="twelve wide column">
+              <table class="ui celled inverted table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th class="six wide">Title</th>
+                    <th>Cost</th>
+                    <th>Creation Date</th>
+                    <th>Seller</th>
+                    <th>Buyer</th>
+                    <th>Ratio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for treasure in data.treasureList|reverse %}
+                    <tr>
+                      <td><a href="https://www.elitepvpers.com/theblackmarket/treasure/{{ treasure.id }}">#{{ treasure.id }}</a></td>
+                      <td>{{ treasure.title|e }}</td>
+                      <td>{{ treasure.cost }}</td>
+                      <td>{{ treasure.timestamp|timestamp_to_time }}</td>
+                      <td><a href="https://www.elitepvpers.com/forum/member.php?u={{ treasure.sellerid }}">{{ treasure.sellername }}</a></td>
+                      {% if treasure.buyerid %}
+                        <td><a href="https://www.elitepvpers.com/forum/member.php?u={{ treasure.buyerid }}">{{ treasure.buyername }}</a></td>
+                      {% else %}
+                        <td></td>
+                      {% endif %}
+                      <td>1 <i class="exchange icon"></i> {{ treasure.ratio|int }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
           </div>
         </div>
-
-        <div class="ui inverted vertical footer segment" id="footer">
-          <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-              <div class="three wide column">
-                <h4 class="ui inverted header">About</h4>
-                <div class="ui inverted link list">
-                  <a href="https://www.elitepvpers.com/forum/members/984054-der-eddy.html" class="item"><i class="user secret icon"></i>Der-Eddy</a>
-                  <a href="https://discord.gg/jPt7mPZ" class="item"><i class="discord icon"></i> Der-Eddy#6508</a>
-                  <a href="https://github.com/Der-Eddy" class="item"><i class="github icon"></i> Der-Eddy</a>
-                  <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate" class="item"><i class="github square icon"></i> GitHub Repository</a>
-                  <a href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html" class="item"><i class="newspaper icon"></i> EPvP Thread</a>
-                  <a href="https://blog.eddy-dev.net/about/" class="item"><i class="info icon"></i> About</a>
-                </div>
-              </div>
-              <div class="three wide column">
-                <h4 class="ui inverted header">Made with</h4>
-                <div class="ui inverted link list">
-                  <a href="http://semantic-ui.com/" class="item"><i class="css3 icon"></i> Semantic-UI</a>
-                  <a href="https://www.python.org/" class="item"><i class="python icon"></i> Python</a>
-                  <a href="http://flask.pocoo.org/" class="item"><i class="flask icon"></i> Flask</a>
-                  <a href="http://jquery.com/" class="item"><i class="js square icon"></i> jQuery</a>
-                  <a href="https://www.nginx.com/" class="item"><i class="github icon"></i> Nginx</a>
-                  <a href="https://www.netcup.de/" class="item"><i class="linux icon"></i> Netcup</a>
-                </div>
-              </div>
-              <div class="five wide column">
-                <h4 class="ui inverted header">Other cool informations</h4>
-                <p>For more treasures check <a href="https://epvptrades.de/">epvptrades.de</a></p>
-                <br><p>This project is <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Open-Source</a> with the <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate/blob/master/LICENSE">GPLv3 License</a></p>
-                <p>Version: {{ gitHash }}</p>
-              </div>
-              <div class="four wide column">
-                <h4 class="ui inverted header">Other statistics</h4>
-                <div class="ui tiny inverted statistic">
-                  <div class="value">
-                    {{ data.treasureCount }}
-                  </div>
-                  <div class="label">
-                    Paysafecard related Treasures (14 days)
-                  </div>
-                </div>
-                <div class="ui tiny inverted statistic">
-                  <div class="value">
-                    {{ data.rows }}
-                  </div>
-                  <div class="label">
-                    All Treasures
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    <script>
-      $('#ex_rate').bind('input', function() {
-      $('#euro').val('');
-      $('#eg').val('');
-      });
-      
-      $('#euro').bind('input', function() {
-      $('#eg').val(Math.round((parseInt($('#ex_rate').val()) / parseInt($('#ex_euro').val())) *
-      parseFloat($(this).val().replace(',', '.'))));
-      });
-      
-      $('#eg').bind('input', function() {
-      $('#euro').val(Math.round(((parseInt($('#ex_euro').val()) / parseInt($('#ex_rate').val())) * parseInt($(this).val())) *
-      100) / 100);
-      });
-
-    </script>
-    </body>
-</html>
+    </div>
+  </div>
+{% endblock %}
