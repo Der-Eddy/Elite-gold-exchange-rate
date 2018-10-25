@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 import git
-from flask import Flask, render_template, json
+from flask import Flask, render_template, json, send_from_directory, jsonify
 app = Flask(__name__)
 
 @app.template_filter('timestamp_to_time')
@@ -15,3 +15,9 @@ def index():
     repo = git.Repo(search_parent_directories=True)
     sha = repo.head.object.hexsha[1:7]
     return render_template('index.html', data=jsonData, gitHash=sha)
+
+@app.route('/api/v1/')
+def api():
+    jsonFile = os.path.join(app.root_path, 'api.json')
+    jsonData = json.load(open(jsonFile))
+    return jsonify(jsonData)
