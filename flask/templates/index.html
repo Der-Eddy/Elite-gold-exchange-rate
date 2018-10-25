@@ -1,6 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 {% block content %}
+  <div class="ui one column centered stackable grid container">
+      <div class="two column centered row">
+          <div class="column" id="left">
+              <div class="ui large violet message">
+                <div class="content">
+                  Last updated at <span style="color: violet;" id="last_updated">{{ data.lastUpdated|timestamp_to_time }}</span>
+                </div>
+              </div>
+              <div class="ui icon blue message">
+                <i class="thumbs info icon"></i>
+                <div class="content">
+                  <div class="header">
+                    Experimental Site
+                  </div>
+                  This is a test site in order to automatically obtain the current Paysafecard to Elite*gold exchange price. Information provided without guarantee.
+                </div>
+              </div>
+          </div>
+
+          <div class="mobile only column" id="left">
+              <div class="ui icon info message">
+                <i class="mobile icon"></i>
+                <div class="content">
+                  You are visiting the mobile site.
+                </div>
+              </div>
+            </div>
+      </div>
+  </div>
+
   <div class="ui two column centered stackable grid" id="grid">
       <div class="five column centered row">
           <div class="ui horizontal inverted divider">
