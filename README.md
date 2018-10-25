@@ -98,6 +98,7 @@ On top of Python 3.6, these PyPi packages are needed:
     requests
     psycopg2
     flask
+    gitpython
 
 LICENSE
 -------------

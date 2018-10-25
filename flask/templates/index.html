@@ -111,10 +111,10 @@
                 <h4 class="ui inverted header">About</h4>
                 <div class="ui inverted link list">
                   <a href="https://www.elitepvpers.com/forum/members/984054-der-eddy.html" class="item"><i class="user secret icon"></i>Der-Eddy</a>
-                  <a href="https://www.reddit.com/user/Der-Eddy/" class="item"><i class="reddit square icon"></i> /u/Der-Eddy</a>
+                  <a href="https://discord.gg/jPt7mPZ" class="item"><i class="discord icon"></i> Der-Eddy#6508</a>
                   <a href="https://github.com/Der-Eddy" class="item"><i class="github icon"></i> Der-Eddy</a>
                   <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate" class="item"><i class="github square icon"></i> GitHub Repository</a>
-                  <a href="https://www.elitepvpers.com/forum/members/984054-der-eddy.html" class="item"><i class="newspaper icon"></i> EPvP Thread</a>
+                  <a href="https://www.elitepvpers.com/forum/main/4544963-elitedb-info-dein-elite-gold-kurs.html" class="item"><i class="newspaper icon"></i> EPvP Thread</a>
                   <a href="https://blog.eddy-dev.net/about/" class="item"><i class="info icon"></i> About</a>
                 </div>
               </div>
@@ -124,28 +124,29 @@
                   <a href="http://semantic-ui.com/" class="item"><i class="css3 icon"></i> Semantic-UI</a>
                   <a href="https://www.python.org/" class="item"><i class="python icon"></i> Python</a>
                   <a href="http://flask.pocoo.org/" class="item"><i class="flask icon"></i> Flask</a>
-                  <a href="http://jquery.com/" class="item"><i class="code icon"></i> jQuery</a>
+                  <a href="http://jquery.com/" class="item"><i class="js square icon"></i> jQuery</a>
                   <a href="https://www.nginx.com/" class="item"><i class="github icon"></i> Nginx</a>
-                  <a href="https://www.cloudflare.com/" class="item"><i class="soundcloud icon"></i> Cloudflare</a>
+                  <a href="https://www.netcup.de/" class="item"><i class="linux icon"></i> Netcup</a>
                 </div>
               </div>
               <div class="five wide column">
                 <h4 class="ui inverted header">Other cool informations</h4>
                 <p>For more treasures check <a href="https://epvptrades.de/">epvptrades.de</a></p>
-                <br><br><p>This site is <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Open-Sourced</a> with the <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate/blob/master/LICENSE">GPLv3 License</a></p>
+                <br><p>This project is <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Open-Source</a> with the <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate/blob/master/LICENSE">GPLv3 License</a></p>
+                <p>Version: {{ gitHash }}</p>
               </div>
               <div class="four wide column">
                 <h4 class="ui inverted header">Other statistics</h4>
                 <div class="ui tiny inverted statistic">
-                  <div class="value" id="currentPlayer">
+                  <div class="value">
                     {{ data.treasureCount }}
                   </div>
                   <div class="label">
-                    Paysafecard related Treasures
+                    Paysafecard related Treasures (14 days)
                   </div>
                 </div>
-                <div class="ui tiny inverted statistic" data-content="During Crimefest" id="maxPlayerStatistic">
-                  <div class="value" id="maxPlayer">
+                <div class="ui tiny inverted statistic">
+                  <div class="value">
                     {{ data.rows }}
                   </div>
                   <div class="label">
