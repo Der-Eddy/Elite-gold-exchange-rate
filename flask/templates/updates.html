@@ -1,5 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Updates{% endblock %}
 {% block content %}
-Coming soon
+  <div class="ui one column centered stackable grid container">
+      <div class="two column centered row">
+          <div class="column" id="left">
+              <div class="ui icon blue message">
+                <i class="thumbs info icon"></i>
+                <div class="content">
+                  <div class="header">
+                    GitHub Repository
+                  </div>
+                  The git repository of this project can be found at GitHub: <a href="https://github.com/Der-Eddy/Elite-gold-exchange-rate">Der-Eddy/Elite-gold-exchange-rate</a>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="ui two column centered stackable grid" id="grid">
+      <div class="five column centered row">
+          <div class="ui horizontal inverted divider">
+            <p><i class="github icon"></i> Git Commits</p>
+          </div>
+          <div class="eight wide column">
+              <table class="ui unstackable inverted table">
+                <tbody id="updates">
+                </tbody>
+              </table>
+
+              <script>
+              $.getJSON( "https://api.github.com/repos/Der-Eddy/Elite-gold-exchange-rate/commits", function( data ) {
+                  data.forEach( function(commit){
+                      $("#updates").append('<tr>' +
+                            '<td class="collapsing"><img src="' + commit.author.avatar_url + '" width="36" height="36"></td>' +
+                            '<td><b>' + commit.commit.message + '</b><br>' +
+                              '<span><a href="' + commit.author.html_url + '" target="_blank">' + commit.author.login + '</a> committed ' + commit.commit.committer.date + '</span>' +
+                            '</td><td class="right aligned"><a href="' + commit.html_url + '"><button class="ui blue button">' + commit.sha.substring(0, 7) + '</button></a></td></tr>');
+                      });
+              }).error(function() { alert("GitHub API down?"); });
+              </script>
+          </div>
+        </div>
+    </div>
+  </div>
 {% endblock %}

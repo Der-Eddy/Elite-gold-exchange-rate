@@ -4,28 +4,25 @@ import git
 from flask import Flask, render_template, json, send_from_directory, jsonify
 app = Flask(__name__)
 
+jsonFile = os.path.join(app.root_path, 'api.json')
+jsonData = json.load(open(jsonFile))
+
+repo = git.Repo(search_parent_directories=True)
+sha = repo.head.object.hexsha[0:7]
+
 @app.template_filter('timestamp_to_time')
 def timestamp_to_time(s):
     return datetime.fromtimestamp(s).strftime('%d %b. %Y %H:%M')
 
 @app.route('/')
 def index():
-    jsonFile = os.path.join(app.root_path, 'api.json')
-    jsonData = json.load(open(jsonFile))
-    repo = git.Repo(search_parent_directories=True)
-    sha = repo.head.object.hexsha[1:7]
     return render_template('index.html', data=jsonData, gitHash=sha)
 
 @app.route('/updates')
 def updates():
-    jsonFile = os.path.join(app.root_path, 'api.json')
-    jsonData = json.load(open(jsonFile))
-    repo = git.Repo(search_parent_directories=True)
-    sha = repo.head.object.hexsha[1:7]
-    return render_template('updates.html', data=jsonData, gitHash=sha)
+    commits = repo.iter_commits()
+    return render_template('updates.html', data=jsonData, gitHash=sha, commits=commits)
 
 @app.route('/api/v1/')
 def api():
-    jsonFile = os.path.join(app.root_path, 'api.json')
-    jsonData = json.load(open(jsonFile))
     return jsonify(jsonData)
