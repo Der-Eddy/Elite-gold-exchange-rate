@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 import git
+import requests
 from flask import Flask, render_template, json, send_from_directory, jsonify
 app = Flask(__name__)
 
@@ -25,4 +26,11 @@ def updates():
 
 @app.route('/api/v1/')
 def api():
+    data = {
+        'idsite': '4',
+        'rec': '1',
+        'action_name': 'API',
+        'url': '/api/v1/'
+    }
+    requests.post('https://piwik.eddy-dev.net/piwik.php', data=data)
     return jsonify(jsonData)
