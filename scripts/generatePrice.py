@@ -53,7 +53,7 @@ for entry in queryResult:
 jsonData['median'] = median(priceList)
 jsonData['medianSold'] = median(soldPriceList)
 jsonData['treasureList'] = parsedList
-cur.execute("SELECT COUNT(id) FROM treasures")
+cur.execute("SELECT * FROM treasures WHERE timestamp IS NOT NULL ORDER BY id DESC LIMIT 1")
 jsonData['rows'] = int(cur.fetchone()[0])
 jsonData['lastUpdated'] = datetime.datetime.now().timestamp()
 
