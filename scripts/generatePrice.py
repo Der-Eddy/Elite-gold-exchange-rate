@@ -14,7 +14,7 @@ con = pg.connect(
     password=databaseCred['dbpassword'])
 cur = con.cursor()
 
-cur.execute("SELECT * FROM treasures WHERE (title LIKE '%PSC%' OR title LIKE '%psc%' OR title LIKE '%Paysafecard%' OR title LIKE '%paysafecard%') AND timestamp > NOW() - INTERVAL '14 days'")
+cur.execute("SELECT * FROM treasures WHERE (title LIKE '%PSC%' OR title LIKE '%psc%' OR title LIKE '%Psc%' OR title LIKE '%Paysafecard%' OR title LIKE '%paysafecard%') AND timestamp > NOW() - INTERVAL '30 days'")
 priceList = []
 parsedList = []
 queryResult = cur.fetchall()
