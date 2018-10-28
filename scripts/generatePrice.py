@@ -16,6 +16,7 @@ cur = con.cursor()
 
 cur.execute("SELECT * FROM treasures WHERE (title LIKE '%PSC%' OR title LIKE '%psc%' OR title LIKE '%Psc%' OR title LIKE '%Paysafecard%' OR title LIKE '%paysafecard%') AND timestamp > NOW() - INTERVAL '30 days'")
 priceList = []
+soldPriceList = []
 parsedList = []
 queryResult = cur.fetchall()
 jsonData['treasureCount'] = len(queryResult)
@@ -43,11 +44,14 @@ for entry in queryResult:
         continue
     exchangePrice = cost / euro
     priceList.append(exchangePrice)
+    if buyer != None:
+        soldPriceList.append(exchangePrice)
     parsedList.append({'id': id, 'sellerid': sellerid, 'sellername': seller, 'cost': cost, 'timestamp': timestamp, 'title': title, 'buyerid': buyerid, 'buyername': buyer, 'ratio': exchangePrice})
     #print(f'{id} - {title} - {cost} - {euro}')
     #print(exchangePrice)
 
 jsonData['median'] = median(priceList)
+jsonData['medianSold'] = median(soldPriceList)
 jsonData['treasureList'] = parsedList
 cur.execute("SELECT COUNT(id) FROM treasures")
 jsonData['rows'] = int(cur.fetchone()[0])

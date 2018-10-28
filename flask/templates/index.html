@@ -36,9 +36,13 @@
           <div class="ui horizontal inverted divider">
             <p>Paysafecard <i class="exchange icon"></i> Elite*gold Exchange Median Price</p>
           </div>
-          <div class="six wide computer only column">
+          <div class="column">
               <h1 class="ui center aligned">1 € <i class="exchange icon"></i> {{ data.median|int }} Elite*gold</h1>
-              <div class="ui center aligned">Based on created treasures in the last 30 days</div>
+              <div class="ui center aligned">Based on <span style="color: violet;">all</span> created treasures in the last 30 days</div>
+          </div>
+          <div class="column">
+              <h1 class="ui center aligned">1 € <i class="exchange icon"></i> {{ data.medianSold|int }} Elite*gold</h1>
+              <div class="ui center aligned">Based on <span style="color: violet;">sold</span> treasures in the last 30 days</div>
           </div>
 
           <div class="ui horizontal inverted divider">

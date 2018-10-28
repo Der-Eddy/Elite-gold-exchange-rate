@@ -6,7 +6,7 @@ A small website which tries to calculate the current elite*gold exchange rate vi
 
 Screenshots
 -------------
-![Homepage](https://i.imgur.com/ejAPnzM.png)
+![Homepage](https://i.imgur.com/DfyeYhQ.png)
 
 Configuration
 -------------
