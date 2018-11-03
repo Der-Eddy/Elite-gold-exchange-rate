@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 import git
-import requests
+#import requests
 from flask import Flask, render_template, json, send_from_directory, jsonify
 app = Flask(__name__)
 
@@ -24,6 +24,7 @@ def updates():
     commits = repo.iter_commits()
     return render_template('updates.html', data=jsonData, gitHash=sha, commits=commits)
 
+@app.route('/api.json')
 @app.route('/api/v1/')
 def api():
     data = {
@@ -32,8 +33,13 @@ def api():
         'action_name': 'API',
         'url': '/api/v1/'
     }
-    requests.post('https://piwik.eddy-dev.net/piwik.php', data=data)
+    #requests.post('https://piwik.eddy-dev.net/piwik.php', data=data)
     return jsonify(jsonData)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.errorhandler(404)
 def page_not_found(e):
