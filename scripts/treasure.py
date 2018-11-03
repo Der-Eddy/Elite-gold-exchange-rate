@@ -92,5 +92,11 @@ if __name__ == '__main__':
         finally:
             con.commit()
 
+    # Cleanup non-valid treasures after the last valid one
+    cur.execute('SELECT id FROM treasures WHERE cost IS NOT NULL ORDER BY id DESC LIMIT 1;')
+    lastTreasure = cur.fetchone()[0]
+    cur.execute('DELETE FROM treasures WHERE id > %s;', (lastTreasure,))
+    con.commit()
+
     cur.close()
     con.close()
