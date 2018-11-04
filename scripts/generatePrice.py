@@ -1,8 +1,11 @@
 import re
+import os
+import sys
 import json
 import datetime
 from statistics import median
 import psycopg2 as pg
+from PIL import Image, ImageFont, ImageDraw
 from config import __version__, databaseCred, cookieJar, userAgent, jsonSavePath
 
 jsonData = {}
@@ -50,7 +53,8 @@ for entry in queryResult:
     #print(f'{id} - {title} - {cost} - {euro}')
     #print(exchangePrice)
 
-jsonData['median'] = median(priceList)
+medianPrice = int(median(priceList))
+jsonData['median'] = medianPrice
 jsonData['medianSold'] = median(soldPriceList)
 jsonData['treasureList'] = parsedList
 cur.execute("SELECT * FROM treasures WHERE timestamp IS NOT NULL ORDER BY id DESC LIMIT 1")
@@ -59,6 +63,16 @@ jsonData['lastUpdated'] = datetime.datetime.now().timestamp()
 
 with open(jsonSavePath, 'w') as file:
     json.dump(jsonData, file)
+
+# Generates an image to use as signature
+path = os.path.join(os.path.dirname(sys.argv[0]), 'assets')
+base = os.path.join(path, 'base.png')
+font = os.path.join(path, 'fonts', 'Lato-Regular.ttf')
+img = Image.open(base)
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype(font, 48)
+draw.text((477, 121), f': {medianPrice} e*g', (42, 42, 42), font=font)
+img.save(os.path.join(path, 'signature.png'))
 
 cur.close()
 con.close()

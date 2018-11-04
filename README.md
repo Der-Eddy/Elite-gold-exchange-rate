@@ -99,7 +99,10 @@ On top of Python 3.6, these PyPi packages are needed:
     psycopg2
     flask
     gitpython
+    Pillow
 
 LICENSE
 -------------
 This project is licensed under [GPLv3](https://raw.githubusercontent.com/Der-Eddy/Elite-gold-exchange-rate/master/LICENSE).
+
+Additionally, the used [Lato font](https://www.latofonts.com/lato-free-fonts/) is licensed under [OFL](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).

@@ -92,3 +92,4 @@ ENV/
 config.py
 debug.py
 *.json
+signature.png
