@@ -41,6 +41,12 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.route('/signatur.png')
+@app.route('/signature.png')
+def signature():
+    return send_from_directory(app.root_path,
+                               'signature.png', mimetype='image/png')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', data=jsonData, gitHash=sha), 404

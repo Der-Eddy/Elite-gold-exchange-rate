@@ -6,7 +6,7 @@ import datetime
 from statistics import median
 import psycopg2 as pg
 from PIL import Image, ImageFont, ImageDraw
-from config import __version__, databaseCred, cookieJar, userAgent, jsonSavePath
+from config import __version__, databaseCred, cookieJar, userAgent, flaskSavePath
 
 jsonData = {}
 
@@ -61,6 +61,7 @@ cur.execute("SELECT * FROM treasures WHERE timestamp IS NOT NULL ORDER BY id DES
 jsonData['rows'] = int(cur.fetchone()[0])
 jsonData['lastUpdated'] = datetime.datetime.now().timestamp()
 
+jsonSavePath = os.path.join(flaskSavePath, 'api.json')
 with open(jsonSavePath, 'w') as file:
     json.dump(jsonData, file)
 
@@ -72,7 +73,7 @@ img = Image.open(base)
 draw = ImageDraw.Draw(img)
 font = ImageFont.truetype(font, 48)
 draw.text((477, 121), f': {medianPrice} e*g', (42, 42, 42), font=font)
-img.save(os.path.join(path, 'signature.png'))
+img.save(os.path.join(flaskSavePath, 'signature.png'))
 
 cur.close()
 con.close()
