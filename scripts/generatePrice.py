@@ -53,7 +53,7 @@ for entry in queryResult:
     #print(f'{id} - {title} - {cost} - {euro}')
     #print(exchangePrice)
 
-medianPrice = int(median(priceList))
+medianPrice = median(priceList)
 jsonData['median'] = medianPrice
 jsonData['medianSold'] = median(soldPriceList)
 jsonData['treasureList'] = parsedList
@@ -72,7 +72,7 @@ font = os.path.join(path, 'fonts', 'Lato-Regular.ttf')
 img = Image.open(base)
 draw = ImageDraw.Draw(img)
 font = ImageFont.truetype(font, 48)
-draw.text((477, 121), f': {medianPrice} e*g', (42, 42, 42), font=font)
+draw.text((477, 121), f'~ {int(medianPrice)} e*g', (42, 42, 42), font=font)
 img.save(os.path.join(flaskSavePath, 'signature.png'))
 
 cur.close()
